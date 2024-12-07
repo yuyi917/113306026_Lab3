@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>113306026_Lab3_Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            margin-top: 20px;
+            color: #333;
+        }
+        #result img {
+            max-width: 200px;
+            margin-top: 20px;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>113306026_Lab3_Number Guessing Game</h1>
+    <div id="result"></div>
+    <script>
+        const answer = Math.floor(Math.random() * 100) + 1;
+        let attempts = 7;
+        let min = 1;
+        let max = 100;
+        let guessedCorrectly = false;
+
+        while (attempts > 0 && !guessedCorrectly) {
+            let input = prompt(`猜測一個數字 (${min} 到 ${max})，剩餘次數：${attempts}`);
+
+            if (input === null) {
+                alert("遊戲結束，感謝參與！");
+                break;
+            }
+
+            input = parseInt(input);
+
+            if (isNaN(input) || input < min || input > max) {
+                alert("輸入錯誤！請輸入有效數字！");
+                continue;
+            }
+
+            if (input === answer) {
+                alert("恭喜你，答對了！");
+                document.getElementById("result").innerHTML = `<img src="correct.jpg" alt="Correct!"><p>恭喜答對！</p>`;
+                guessedCorrectly = true;
+            } else {
+                attempts--;
+                if (input > answer) {
+                    max = input - 1;
+                    alert("太大了！");
+                } else {
+                    min = input + 1;
+                    alert("太小了！");
+                }
+            }
+        }
+
+        if (!guessedCorrectly && attempts === 0) {
+            alert(`很遺憾，正確答案是 ${answer}`);
+            document.getElementById("result").innerHTML = `<img src="wrong.jpg" alt="Wrong!"><p>答案是 ${answer}，下次加油！</p>`;
+        }
+    </script>
+</body>
+</html>
